@@ -1,6 +1,6 @@
 // Modules
 var config = require('./config'),
-    commandHandler = require('./command/CommandHandler.js'),
+    commandHandler = require('./CommandHandler.js'),
     irc = require('irc'),
     express = require('express'),
     morgan = require('morgan'),
