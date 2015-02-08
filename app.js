@@ -22,6 +22,7 @@ bot.addListener('join', function(channel, who) {
             bot.send('MODE', channel, '+o', who);
         }
     }
+    // TODO: Fix me
     // for (user in config.toVoice[channel]) {
     //     if (who == config.toVoice[channel][user]) {
     //         bot.send('MODE', channel, '+v', who);
