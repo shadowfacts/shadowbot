@@ -1,0 +1,13 @@
+// shadowbot main configuration
+exports.channels = ['#channel1', '#channel2'];
+exports.server = 'irc.yourserver.net';
+exports.nick = 'shadowbot';
+exports.loginCmd = '/msg nickserv identify password';
+exports.toOp = {
+        '#channel1': ['user1'],
+        '#channel2': ['user1', 'user2']
+};
+exports.toVoice = {
+        '#channel1': ['user2'],
+        '#channel2': ['user3']
+};
