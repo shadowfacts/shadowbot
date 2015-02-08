@@ -4,6 +4,8 @@ exports.handle = handle;
 exports.people = [];
 
 // Commands
+exports.commands = {
+    shadowbot: require('./shadowbot'),
     raw: require('./raw'),
     me: require('./me'),
     yt: require('./yt')
@@ -21,7 +23,7 @@ function handle(channel, sender, command, args) {
 
 function getCommand(command) {
     if (command == 'shadowbot') {
-        return exports.commands.
+        return exports.commands.shadowbot;
     } else if (command == 'raw') {
         return exports.commands.raw;
     } else if (command == 'me') {
