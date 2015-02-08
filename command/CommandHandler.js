@@ -12,7 +12,6 @@ exports.people = [];
 
 function handle(channel, sender, command, args) {
     cmd = getCommand(command);
-    console.log(cmd);
     if (cmd != null) {
         if (validMode(channel, sender, cmd)) {
             cmd.run(channel, sender, args);
