@@ -4,8 +4,6 @@ exports.handle = handle;
 exports.people = [];
 
 // Commands
-exports.commands = commands;
-var commands = {
     raw: require('./raw'),
     me: require('./me'),
     yt: require('./yt')
