@@ -81,8 +81,6 @@ app.post('/enfusion', function(req, res) {
 
             request.post({ url: 'http://git.io', formData: formData }, function(err, res, body) {
                 var url = res.headers['location']
-                console.log(url);
-                console.log(res.headers);
 
                 var msg = '[EnFusion/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
                 bot.say('#shadowfacts', msg);
