@@ -1,3 +1,6 @@
+// Modules
+var config = require('./config');
+
 // Stuff
 exports.bot;
 exports.handle = handle;
@@ -15,7 +18,7 @@ exports.commands = {
 function handle(channel, sender, command, args) {
     cmd = getCommand(command);
     if (cmd != null) {
-        if (validMode(channel, sender, cmd)) {
+        if (config.globals.indexOf(sender) != -1 || validMode(channel, sender, cmd)) {
             cmd.run(channel, sender, args);
         }
     }
