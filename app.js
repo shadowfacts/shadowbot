@@ -107,8 +107,6 @@ app.post('/shadowbot', function(req, res) {
                 var msg = '[shadowbot/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
                 bot.say('#shadowfacts', msg);
                 bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
-                bot.say('shadowfacts|away', 'I was pushed to, someone needs to update me.');
-                bot.say('shadowfacts|sleep', 'I was pushed to, someone needs to update me.');
             });
         }
     }
