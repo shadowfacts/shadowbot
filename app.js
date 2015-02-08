@@ -90,6 +90,31 @@ app.post('/enfusion', function(req, res) {
 
     res.end();
 });
+// shadowbot
+app.post('/shadowbot', function(req, res) {
+    var hook = req.body;
+    if (req.get('X-Github-Event') == 'push') {
+        var temp = hook['ref'].split('/')
+        var branch = temp[temp.length - 1];
+        for (i in hook['commits']) {
+            var commit = hook['commits'][i];
+
+            var formData = { url: commit['url'] };
+
+            request.post({ url: 'http://git.io', formData: formData }, function(err, res, body) {
+                var url = res.headers['location']
+
+                var msg = '[shadowbot/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
+                bot.say('#shadowfacts', msg);
+                bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
+                bot.say('shadowfacts|away', 'I was pushed to, someone needs to update me.');
+                bot.say('shadowfacts|sleep', 'I was pushed to, someone needs to update me.');
+            });
+        }
+    }
+
+    res.end();
+});
 
 app.listen(2015);
 console.log('Webhook server started on port 2015.');
