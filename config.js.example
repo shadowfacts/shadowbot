@@ -16,3 +16,4 @@ exports.toVoice = {
 exports.ytKey = "keyhere";
 // Global users, can use all commands in any channel
 exports.globals = ["shadowfacts"];
+exports.updateMsg = false;

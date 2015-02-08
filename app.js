@@ -110,8 +110,7 @@ app.post('/shadowbot', function(req, res) {
                 bot.say('#shadowfacts', msg);
             });
         }
-
-        bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
+        if (config.updateMsg) bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
     }
 
     res.end();
