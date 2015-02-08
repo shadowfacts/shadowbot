@@ -39,6 +39,7 @@ bot.addListener('message', function(from, to, text, message) {
             commandHandler.handle(to, from, command, args);
         }
     }
+
 });
 
 // People
@@ -107,9 +108,10 @@ app.post('/shadowbot', function(req, res) {
 
                 var msg = '[shadowbot/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
                 bot.say('#shadowfacts', msg);
-                bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
             });
         }
+
+        bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
     }
 
     res.end();
