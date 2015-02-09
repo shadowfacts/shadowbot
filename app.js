@@ -1,6 +1,7 @@
 // Modules
 var config = require('./config'),
-    commandHandler = require('./CommandHandler.js'),
+    commandHandler = require('./CommandHandler'),
+    util = require('./util'),
     irc = require('irc'),
     express = require('express'),
     morgan = require('morgan'),
@@ -40,6 +41,9 @@ bot.addListener('message', function(from, to, text, message) {
         }
     }
 
+    if (util.tryYouTube(from, to, text)) {
+        return;
+    } else if (util.tryGitHub(from, to, text)) {
 });
 
 // People

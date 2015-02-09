@@ -19,7 +19,7 @@ function run(channel, sender, args) {
 
             app.bot.say(channel, 'YouTube - ' + ytChannel + ': ' + title + ' - ' + url);
         } catch (ex) {
-            app.bot.say(channel, 'Uh oh, something wen\'t wrong.');
+            app.bot.say(channel, 'Uh oh, that probably wasn\' a valid YouTube URL.');
         }
     });
 }
