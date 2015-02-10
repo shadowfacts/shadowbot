@@ -1,6 +1,6 @@
 // Modules
 var app = require('../app'),
-    config = require('../config'),
+    config = require('../../config'),
     request = require('request');
 
 exports.mode = "";

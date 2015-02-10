@@ -1,5 +1,5 @@
 // Modules
-var config = require('./config');
+var config = require('../../config');
 
 // Stuff
 exports.bot;
@@ -8,10 +8,10 @@ exports.people = [];
 
 // Commands
 exports.commands = {
-    shadowbot: require('./command/shadowbot'),
-    raw: require('./command/raw'),
-    me: require('./command/me'),
-    yt: require('./command/yt')
+    shadowbot: require('./shadowbot'),
+    raw: require('./raw'),
+    me: require('./me'),
+    yt: require('./yt')
 }
 
 

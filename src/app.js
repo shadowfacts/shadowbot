@@ -1,12 +1,14 @@
 // Modules
-var config = require('./config'),
-    commandHandler = require('./CommandHandler'),
+var config = require('../config'),
+    commandHandler = require('./command/CommandHandler'),
+    hookManager = require('./hook/HookManager'),
     util = require('./util'),
     irc = require('irc'),
     express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
-    request = require('request');
+    request = require('request'),
+    async = require('async');
 
 
 // Setup
@@ -18,17 +20,7 @@ exports.bot = bot;
 
 // Listen for join events
 bot.addListener('join', function(channel, who) {
-    for (user in config.toOp[channel]) {
-        if (who == config.toOp[channel][user]) {
-            bot.send('MODE', channel, '+o', who);
-        }
-    }
-    // TODO: Fix me
-    // for (user in config.toVoice[channel]) {
-    //     if (who == config.toVoice[channel][user]) {
-    //         bot.send('MODE', channel, '+v', who);
-    //     }
-    // }
+    util.autoPermissions(channel, who);
 });
 
 // Commands
@@ -44,6 +36,15 @@ bot.addListener('message', function(from, to, text, message) {
     if (util.tryYouTube(from, to, text)) {
         return;
     } else if (util.tryGitHub(from, to, text)) {
+        return;
+    }
+    // else if (util.tryGist(from, to, text)) {
+    //     return;
+    // } else if (util.tryBitly(from, to, text)) {
+    //     return;
+    // } else if (util.tryTinyURL(from, to, text)) {
+    //     return;
+    // }
 });
 
 // People
@@ -91,6 +92,7 @@ app.post('/enfusion', function(req, res) {
                 var msg = '[EnFusion/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
                 bot.say('#shadowfacts', msg);
             });
+
         }
     }
 
@@ -105,16 +107,14 @@ app.post('/shadowbot', function(req, res) {
         for (i in hook['commits']) {
             var commit = hook['commits'][i];
 
-            var formData = { url: commit['url'] };
-
-            request.post({ url: 'http://git.io', formData: formData }, function(err, res, body) {
+            request.post({ url: 'http://git.io', formData: { url: commit['url'] } }, function(err, res, body) {
                 var url = res.headers['location']
-
-                var msg = '[shadowbot/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
+            
+                var msg = '[EnFusion/' + branch + '] ' + commit['author']['name'] + ': ' + commit['message'] + ' ' + url;
                 bot.say('#shadowfacts', msg);
             });
         }
-        if (config.updateMsg) bot.say('shadowfacts', 'I was pushed to, someone needs to update me.');
+        if (config.updateMsg) bot.say(config.updateMsgReceiver, 'I was pushed to, someone needs to update me.');
     }
 
     res.end();
