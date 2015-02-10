@@ -1,19 +1,39 @@
-// shadowbot main configuration
-exports.channels = ['#channel1', '#channel2'];
-exports.server = 'irc.yourserver.net';
-exports.nick = 'shadowbot';
-exports.loginCmd = '/msg nickserv identify password';
+// Shadowbot main configuration file
 
+
+// Channels to join on startup
+exports.channels = ["#channel1", "#channel2"];
+
+// The IRC server to connect to
+exports.server = "irc.esper.net";
+
+// The nickname to use
+exports.nick = "shadowbot";
+
+// The command(s) to run when the bot connects
+exports.loginCmd = "/msg nickserv identify chocolate";
+
+// Automatically OP people when they join
+exports.autoOpEnabled = false;
 exports.toOp = {
-        '#channel1': ['user1'],
-        '#channel2': ['user1', 'user2']
+        "#channel1": ["person1"],
+        "#channel2": ["person1", "person2"]
 };
+
+// Automatically Voice people when they join
+exports.autoVoiceEnabled = false;
 exports.toVoice = {
-        '#channel1': ['user2'],
-        '#channel2': ['user3']
+        "#channel1": ["person2"],
+        "#channel2": ["person3"]
 };
-// Only used for !yt
-exports.ytKey = "keyhere";
-// Global users, can use all commands in any channel
+
+// The YouTube API key (for v3 YouTube API)
+exports.ytKey = "yourKeyHere";
+
+// A list of global users that can use all commands in any channel
 exports.globals = ["shadowfacts"];
-exports.updateMsg = false;
+
+// Send a PM whenever github.com/shadowfacts/shadowbot is pushed to,
+// notifying them that an update is availible
+exports.updateMsg = true;
+exports.updateMsgReceiver = "shadowfacts";
