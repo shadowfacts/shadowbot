@@ -11,7 +11,8 @@ exports.commands = {
     shadowbot: require('./shadowbot'),
     raw: require('./raw'),
     me: require('./me'),
-    yt: require('./yt')
+    yt: require('./yt'),
+    github: require('./github')
 }
 
 
@@ -33,6 +34,10 @@ function getCommand(command) {
         return exports.commands.me;
     } else if (command == 'yt') {
         return exports.commands.yt;
+    } else if (command == 'github') {
+        return exports.commands.github;
+    } else if (command == 'gh') {
+        return exports.commands.github;
     } else {
         return null;
     }
