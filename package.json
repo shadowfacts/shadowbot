@@ -12,7 +12,8 @@
     "express": "*",
     "morgan": "*",
     "body-parser": "*",
-    "request": "*"
+    "request": "*",
+    "async": "*"
   },
   "engines": {
     "node": "0.10.*"
