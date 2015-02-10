@@ -57,6 +57,48 @@ function handleUser(channel, sender, user) {
 }
 
 function handleRepo(channel, sender, user, repo) {
+    var options = {
+        url: 'https://api.github.com/repos/' + user + '/' + repo,
+        headers: {
+            'User-Agent': 'shadowfacts'
+        }
+    };
+    request(options, function(err, res, body) {
+        if (res.statusCode == 200) {
+            var json = JSON.parse(body);
+
+            var data = {
+                url: json.html_url,
+                owner: json.owner.login,
+                name: json.name,
+                private: json.private,
+                description: json.description || '(none)',
+                fork: json.fork,
+                homepage: json.homepage || '(none)',
+                stargazers: json.stargazers_count,
+                watchers: json.watchers_count,
+                lang: json.language,
+                issues: json.open_issues_count,
+            };
+
+            var msg1 = 'Owner: ' + data.owner + ', Repo Name: ' + data.name + ', Private: ' + data.private;
+            var msg2 = 'Description: ' + data.description;
+            var msg3 = 'Is a Fork: ' + data.fork + ', Homepage: ' + data.homepage;
+            var msg4 = 'Stargazers: ' + data.stargazers + ', Watchers: ' + data.watchers + ', Language: ' + data.lang + ', # Open Issues: ' + data.issues;
+
+            app.bot.say(channel, data.url);
+            app.bot.say(channel, msg1);
+            app.bot.say(channel, msg2);
+            app.bot.say(channel, msg3);
+            app.bot.say(channel, msg4);
+
+        } else if (res.statusCode == '404') {
+            app.bot.say('The repository you are looking for does not exist.');
+        } else {
+            app.bot.say('There was an error accessing the GitHub API.');
+        }
+    });
+
 }
 
 function handleIssue(channel, sender, user, repo, issue) {
