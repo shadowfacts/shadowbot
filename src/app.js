@@ -121,4 +121,5 @@ app.post('/shadowbot', function(req, res) {
 });
 
 app.listen(2015);
+exports.express.listen(config.webhookPort);
 console.log('Webhook server started on port 2015.');

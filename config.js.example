@@ -37,3 +37,6 @@ exports.globals = ["shadowfacts"];
 // notifying them that an update is availible
 exports.updateMsg = true;
 exports.updateMsgReceiver = "shadowfacts";
+
+// Webhook server port
+exports.webhookPort = 2015;
