@@ -49,6 +49,7 @@ function handleUser(channel, sender, user) {
             var msg2 = 'Website: ' + data.website + ', Location: ' + data.location + ', email: ' + data.email;
             var msg3 = 'Public Repos: ' + data.publicRepos + ', Followers: ' + data.followers + ', Following: ' + json.following;
 
+            app.bot.say(channel, data.url);
             app.bot.say(channel, msg1);
             app.bot.say(channel, msg2);
             app.bot.say(channel, msg3);
