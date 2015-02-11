@@ -12,11 +12,6 @@ function run(channel, sender, badArgs) {
     } else if (args.length == 2 && args[1].indexOf('#') == -1) { // Repository
         handleRepo(channel, sender, args[0], args[1]);
     } else if (args.length == 2 && args[1].indexOf('#') != -1) { // Single Issue or PR
-        // if (args[2] == 'issues') { // Single Issue
-        //     handleIssue(channel, sender, args[0], args[1], args[3]);
-        // } else if (args[2] == 'pulls') { // Single PR
-        //     handlePR(channel, sender, args[0], args[1], args[3]);
-        // }
         handleIssueOrPR(channel, sender, args[0], args[1].split('#')[0], args[1].split('#')[1])
     }
 }
@@ -108,14 +103,12 @@ function handleRepo(channel, sender, user, repo) {
 }
 
 function handleIssueOrPR(channel, sender, user, repo, id) {
-    console.log('0');
     var options = {
         url: 'https://api.github.com/repos/' + user + '/' + repo + '/pulls/' + id,
         headers: {
             'User-Agent': 'shadowfacts'
         }
     };
-    console.log(options.url);
 
     request(options, function(err, res, body) {
         if (res.statusCode == 200) { // Pull request
@@ -127,33 +120,26 @@ function handleIssueOrPR(channel, sender, user, repo, id) {
             }
 
         } else { // Issue or actual 404
-            console.log('3');
             var options2 = {
                 url: 'https://api.github.com/repos/' + user + '/' + repo + '/issues/' + id,
                 headers: {
                     'User-Agent': 'shadowfacts'
                 }
             };
-            console.log(options2.url);
             request(options2, function(err, res, body) {
-                console.log('4')
                 if (res.statusCode == 200) { // Issue
-                    console.log('5');
                     handleIssue(channel, sender, JSON.parse(body));
                     return;
                 } else if (res.statusCode == 404) { // Issue/PR doesn't exist
-                    console.log('6');
                     app.bot.say(channel, 'The issue/pr you are looking for does not exist.');
                 } else {
                     app.bot.say(channel, 'There was an error accessing the GitHub API.');
-                    console.log('1');
                     return;
                 }
             });
             return;
         }
         app.bot.say(channel, 'There was an error accessing the GitHub API.');
-        console.log('2');
     });
     return;
 }
