@@ -11,7 +11,7 @@ exports.server = "irc.esper.net";
 exports.nick = "shadowbot";
 
 // The command(s) to run when the bot connects
-exports.loginCmd = "/msg nickserv identify chocolate";
+exports.loginCmd = "/msg nickserv identify password";
 
 // Automatically OP people when they join
 exports.autoOpEnabled = false;
