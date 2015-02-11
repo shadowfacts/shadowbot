@@ -12,8 +12,8 @@ var config = require('../config'),
 
 
 // Setup
-var bot = new irc.Client('irc.esper.net', 'shadowbot', {
-    channels: ['#shadowfacts', '#frozennova']
+var bot = new irc.Client(config.server, config.nick, {
+    channels: config.channels
 });
 commandHandler.bot = bot;
 exports.bot = bot;
