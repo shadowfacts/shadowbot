@@ -1,7 +1,7 @@
 // Modules
 var config = require('../config'),
     commandHandler = require('./command/CommandHandler'),
-    hookManager = require('./hook/HookManager'),
+    HookManager = require('./hook/HookManager'),
     util = require('./util'),
     irc = require('irc'),
     express = require('express'),
