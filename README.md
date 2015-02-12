@@ -21,18 +21,31 @@ node src/app.js
 
 ## Configuration
 `channels`: (array) A list of strings that are channels that the bot should join on startup. **Note:** Channel names must begin with `#`.
+
 `server`: (string) The address of the server that the bot should connect to. e.g. `irc.esper.net` or `irc.freenode.net`.
+
 `nick`: (string) The nickname that the bot will use.
+
 `loginCmd`: (string) A command to send to the the server when the bot logs in. **Note:** Doesn't actually work right now, #13.
+
 `autoOpEnabled`: (boolean) Whether or not to automatically op certain people when they connect. **Note:** Requires the bot to be an operator itself.
+
 `toOp`: (array(s)) See above. **Note:** Currently manually disabled.
+
 `autoVoiceEnabled`: (boolean) Whether or not to automatically voice certain people when the connect. **Note:** Requires the bot to be an operator.
+
 `toVoice`: (array(s)) See above. **Note:** Currently manually disabled.
+
 `ytKey`: (string) The API key to use when accessing the [YouTube v3 API][ytAPI].
+
 `globals`: (array of strings) A list of users that can use all commands in any channel, no matter their status.
+
 `updateMsg`: (boolean) Whether or not to send a private message to someone notifying them that someone has pushed to this repository, and that the bot should be updated. **Note:** Not working properly right now.
+
 `updateMsgReceiver`: (string) The nickname of the person who should receive the update message.
+
 `webhookPort`: (number) The port to run the webhook server on.
+
 `youtubeRegex`: (object (string: boolean)) Whether or not to enable YouTube regular expression matching on a per channel basis.
 
 [esper]: http://esper.net/publicirc.php
