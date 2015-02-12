@@ -81,20 +81,20 @@ exports.tryYouTube = function(from, to, text) {
 var githubRegexpHTTP = /^https?\:\/\/github\.com\/.+$/;
 var githubRegexpNoHTTP = /^github\.com\/.+$/;
 exports.tryGitHub = function(from, to, text) {
-    var success;
-
-
-    if (text.match(githubRegexpHTTP) || text.match(githubRegexpNoHTTP)) {
-        success = true;
-
-        var temp = text.split('/');
-        temp.shift();
-        if (text.match(githubRegexpHTTP)) {
-            temp.shift();
-        }
-
-        commandHandler.handle(to, from, 'github', temp);
-    }
-
-    return success;
+    // var success;
+    //
+    //
+    // if (text.match(githubRegexpHTTP) || text.match(githubRegexpNoHTTP)) {
+    //     success = true;
+    //
+    //     var temp = text.split('/');
+    //     temp.shift();
+    //     if (text.match(githubRegexpHTTP)) {
+    //         temp.shift();
+    //     }
+    //
+    //     commandHandler.handle(to, from, 'github', temp);
+    // }
+    //
+    // return success;
 }
