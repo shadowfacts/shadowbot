@@ -9,10 +9,14 @@ function run(channel, sender, badArgs) {
     var args = badArgs[0].split('/');
     if (args.length == 1) { // User
         handleUser(channel, sender, args[0]);
-    } else if (args.length == 2 && args[1].indexOf('#') == -1) { // Repository
+    } else if (args.length == 2 && args[1].indexOf('#') == -1 && args[1].indexOf('@') == -1) { // Repository
         handleRepo(channel, sender, args[0], args[1]);
-    } else if (args.length == 2 && args[1].indexOf('#') != -1) { // Single Issue or PR
+    } else if (args.length == 2 && args[1].indexOf('#') != -1 && args[1].indexOf('@') == -1) { // Single Issue or PR
         handleIssueOrPR(channel, sender, args[0], args[1].split('#')[0], args[1].split('#')[1])
+    } else if (args.length == 2 && args[1].indexOf('#') == -1 && args[1].indexOf('@') != -1) {
+        handleCommit(channel, sender, args[0], args[1].split('@')[0], args[1].split('@')[1]);
+    } else {
+        app.bot.say(channel, 'No such subcommand of !github.');
     }
 }
 
@@ -189,4 +193,55 @@ function handlePR(channel, sender, json) {
     app.bot.say(channel, msg1 + data.url + msg2 + msg3);
 }
 
+function handleCommit(channel, sender, user, repo, id) {
+    var options = {
+        url: 'https://api.github.com/repos/' + user + '/' + repo + '/commits',
+        headers: {
+            'User-Agent': 'shadowfacts'
+        }
+    };
+    request(options, function(err, res, body) {
+        if (res.statusCode == 200) {
+            var commits = JSON.parse(body);
+
+            for (i in commits) {
+                var commit = commits[i];
+                var sha = commit.sha;
+
+                if (sha.slice(0, id.length) == id) {
+                    var options2 = {
+                        url: options.url + '/' + sha,
+                        headers: {
+                            'User-Agent': 'shadowfacts'
+                        }
+                    };
+                    request(options2, function(err, res, body) {
+                        if (res.statusCode == 200) {
+                            var json = JSON.parse(body);
+
+                            var data = {
+                                url: json.html_url,
+                                username: json.commit.committer.name,
+                                date: json.commit.committer.date,
+                                message: json.commit.message,
+                                additions: json.stats.additions,
+                                deletions: json.stats.deletions,
+                                filesModified: json.files.length
+                            };
+
+                            var msg1 = ', Author: ' + data.username + ', Message: ' + data.message + ', Date: ' + data.date;
+                            var msg2 = ', Additions: ' + data.additions + ', Deletions: ' + data.deletions + ', # Files Modified: ' + data.filesModified;
+
+                            app.bot.say(channel, data.url + msg1 + msg2);
+
+                        } else {
+                            app.bot.say(channel, 'There was an error accessing the GitHub API.');
+                        }
+                    });
+                }
+            }
+        } else {
+            app.bot.say(channel, 'There was an error accessing the GitHub API.');
+        }
+    });
 }
