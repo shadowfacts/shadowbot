@@ -40,14 +40,11 @@ function handleUser(channel, sender, user) {
                 following: json.following
             };
 
-            var msg1 = 'Username: ' + data.login + ', Name: ' + data.name + ', Company: ' + data.company;
-            var msg2 = 'Website: ' + data.website + ', Location: ' + data.location + ', email: ' + data.email;
-            var msg3 = 'Public Repos: ' + data.publicRepos + ', Followers: ' + data.followers + ', Following: ' + json.following;
+            var msg1 = ', Username: ' + data.login + ', Name: ' + data.name + ', Company: ' + data.company;
+            var msg2 = ', Website: ' + data.website + ', Location: ' + data.location + ', email: ' + data.email;
+            var msg3 = ', Public Repos: ' + data.publicRepos + ', Followers: ' + data.followers + ', Following: ' + json.following;
 
-            app.bot.say(channel, data.url);
-            app.bot.say(channel, msg1);
-            app.bot.say(channel, msg2);
-            app.bot.say(channel, msg3);
+            app.bot.say(channel, data.url + msg1 + msg2 + msg3);
 
         } else if (res.statusCode == '404') {
             app.bot.say(channel, 'The user you are looking for does not exist.');
@@ -82,16 +79,12 @@ function handleRepo(channel, sender, user, repo) {
                 issues: json.open_issues_count,
             };
 
-            var msg1 = 'Owner: ' + data.owner + ', Repo Name: ' + data.name + ', Private: ' + data.private;
-            var msg2 = 'Description: ' + data.description;
-            var msg3 = 'Is a Fork: ' + data.fork + ', Homepage: ' + data.homepage;
-            var msg4 = 'Stargazers: ' + data.stargazers + ', Watchers: ' + data.watchers + ', Language: ' + data.lang + ', # Open Issues: ' + data.issues;
+            var msg1 = ', Owner: ' + data.owner + ', Repo Name: ' + data.name + ', Private: ' + data.private;
+            var msg2 = ', Description: ' + data.description;
+            var msg3 = ', Is a Fork: ' + data.fork + ', Homepage: ' + data.homepage;
+            var msg4 = ', Stargazers: ' + data.stargazers + ', Watchers: ' + data.watchers + ', Language: ' + data.lang + ', # Open Issues: ' + data.issues;
 
-            app.bot.say(channel, data.url);
-            app.bot.say(channel, msg1);
-            app.bot.say(channel, msg2);
-            app.bot.say(channel, msg3);
-            app.bot.say(channel, msg4);
+            app.bot.say(channel, data.url + msg1 + msg2 + msg3 + msg4);
 
         } else if (res.statusCode == '404') {
             app.bot.say('The repository you are looking for does not exist.');
@@ -157,20 +150,17 @@ function handleIssue(channel, sender, json) {
         closedBy: json.closed_by
     };
 
-    var msg1 = '#' + data.number + ': ' + data.title;
-    var msg2 = 'Created by: ' + data.creator + ', State: ' + data.state + ', Locked: ' + data.locked;
+    var msg1 = '#' + data.number + ': ' + data.title + ', ';
+    var msg2 = ', Created by: ' + data.creator + ', State: ' + data.state + ', Locked: ' + data.locked;
     var msg3;
 
     if (data.state == 'closed') {
-        msg3 = 'Assigned to: ' + data.assignee + ', Closed by: ' + data.closedBy;
+        msg3 = ', Assigned to: ' + data.assignee + ', Closed by: ' + data.closedBy;
     } else {
-        msg3 = 'Assigned to: ' + data.assignee;
+        msg3 = ', Assigned to: ' + data.assignee;
     }
 
-    app.bot.say(channel, data.url);
-    app.bot.say(channel, msg1);
-    app.bot.say(channel, msg2);
-    app.bot.say(channel, msg3);
+    app.bot.say(channel, msg1 + data.url + msg2 + msg3);
 }
 
 function handlePR(channel, sender, json) {
@@ -187,17 +177,16 @@ function handlePR(channel, sender, json) {
         commits: json.commits
     };
 
-    var msg1 = '#' + data.number + ': ' + data.title;
-    var msg2 = 'Created by: ' + data.creator + ', State: ' + (data.merged ? "merged" : json.state) + ', Locked: ' + data.locked;
+    var msg1 = '#' + data.number + ': ' + data.title + ', ';
+    var msg2 = ', Created by: ' + data.creator + ', State: ' + (data.merged ? "merged" : json.state) + ', Locked: ' + data.locked;
     var date = data.closedAt || '(none)';
     if (date == null || date.typeof == 'undefined') {
         date = '(none)';
     }
 
-    var msg3 = '# Commits: ' + data.commits + ', Closed/Merged at: ' + date;
+    var msg3 = ', # Commits: ' + data.commits + ', Closed/Merged at: ' + date;
 
-    app.bot.say(channel, data.url);
-    app.bot.say(channel, msg1);
-    app.bot.say(channel, msg2);
-    app.bot.say(channel, msg3);
+    app.bot.say(channel, msg1 + data.url + msg2 + msg3);
+}
+
 }
