@@ -1,0 +1,11 @@
+{
+    "server": "irc.esper.net",
+    "channels": ["#shadowfacts", "#frozennova"],
+    "nickname": "shadowbot@v2",
+    "commands": {
+        "raw": true,
+        "me": true,
+        "youtube": true,
+        "github": true
+    }
+}
